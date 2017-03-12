@@ -1,6 +1,69 @@
 
 ### 这里面总结一些自己知道的webapp的坑，当然，随着浏览器的进步，我希望这些坑还是被解决比较好
 
+### 滚动问题
+
+全局滚动：滚动条挂在body或者更高。
+
+其他算局部滚动。
+
+#### iOS弹性滚动效果
+
+iOS 全局滚动，默认支持全局滚动效果，但是局部滚动没有弹性滚动效果，滑动起来比较干涩。
+
+iOS局部滚动使用弹性滚动效果：
+
+```
+body{
+	-webkit-overflow-scrolling:touch;
+}
+```
+
+android默认没有弹性滚动效果，上述属性也是不支持的(chrome支持)
+
+#### iOS出界的问题
+
+全局滚动：滚动到页面顶部或者底部，继续向上或者向下滑动，就会出现出界。
+
+局部滚动：滚动到页面顶部或者底部，手指离开停下，再继续向下或者向上滚动，就会出现。
+
+局部滚动解决出界：使用Scrollfix，核心就是监听touchmove事件并判断是否在顶部或者底部，然后调整。
+
+或者不需要出界的滚动直接禁止touchmove事件
+
+全局滚动出界还不好弄。
+
+所以iOS最好用局部滚动。
+
+#### android局部滚动
+
+滚动条主要有局部滚动问题。
+
+安卓下建议使用全局滚动。
+
+#### 滚动卡顿
+
+如果内容很多，用ISroll会看上去很卡。
+
+如果用div局部滚动，也是有闪白bug的。
+
+pointer-events:none上的元素能否触发scroll事件？可以
+
+移动端window的scroll事件不能实时触发，div的scroll事件能否实时触发？可以
+
+所以最后解决方案：放一个`pointer-events:none`的空div在上面。然后复用dom。
+
+![](https://www.10000h.top/images/data_img/gundong.png)
+
+### 定制键盘
+
+配置input的type属性，定制键盘，比如`tel、number、url、search`
+
+另外可以通过`pattern=[0-9]*`来定制数字键盘。
+
+通过`autocaptialize="off"`关闭首字母大写
+
+---
 
 ####1.input placeholder问题
 
